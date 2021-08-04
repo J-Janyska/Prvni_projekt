@@ -32,8 +32,8 @@ in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
 
-line_length = 60
-line = "-" * line_length
+LINE_LENGTH = 60
+line = "-" * LINE_LENGTH
 number_of_texts = len(TEXTS)
 
 registred_users_and_passwords = [
@@ -62,11 +62,11 @@ print(line)
 if not user_input.isdigit():
     print("Not an integer value requested !")
     exit(2)
-else:
-    selected_text_index = int(user_input) - 1
-    if selected_text_index not in range(number_of_texts):
-        print(f"We have no such text, a number btw. 1 and {number_of_texts} was expected.")
-        exit(3)
+
+selected_text_index = int(user_input) - 1
+if selected_text_index not in range(number_of_texts):
+    print(f"We have no such text, a number btw. 1 and {number_of_texts} was expected.")
+    exit(3)
 
 # Text analysis
 stats = {
@@ -77,15 +77,13 @@ stats = {
     "numeric strings" : 0,
     "sum" : 0    }
 
-clean_words = list()
 word_length_frequency = dict()
 
-for word in TEXTS[selected_text_index].split():
-    clean_words.append(word.strip(",.:;"))
+for text_fragment in TEXTS[selected_text_index].split():
+    stats["words"] += 1
+    word = text_fragment.strip(",.:;")
+    word_length_frequency[len(word)] = word_length_frequency.get(len(word), 0) + 1
 
-stats["words"] = len(clean_words)
-
-for word in clean_words:
     if word.istitle():
         stats["titlecase words"] += 1
     elif word.islower():
@@ -95,8 +93,6 @@ for word in clean_words:
     elif word.isdigit():
         stats["numeric strings"] += 1
         stats["sum"] += int(word)
-
-    word_length_frequency[len(word)] = word_length_frequency.get(len(word), 0) + 1
 
 # Print results I - stats
 for stat in stats:
@@ -108,7 +104,7 @@ for stat in stats:
         print(f"There are {stats[stat]} {stat}.")
 
 # Print results II - Occurences table
-align_adjust = line_length - 7
+align_adjust = LINE_LENGTH - 7
 print(line, f"LEN|{'  OCCURENCES': <{align_adjust}}|NR.", line, sep="\n")
 
 for length in sorted(word_length_frequency.keys()):
