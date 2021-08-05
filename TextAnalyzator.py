@@ -104,6 +104,7 @@ for stat in stats:
 # Print results II - Occurences table
 occurence_col_width = max(word_length_occurences.values()) + 2
 table_headers = ["LEN", "OCCURENCES".center(occurence_col_width), "NR."]
+
 print(line, "|".join(table_headers), line, sep="\n")
 
 for length in sorted(word_length_occurences.keys()):
