@@ -69,7 +69,7 @@ user_input = input(f"Enter a number btw. 1 and {number_of_texts} to select:")
 print(line)
 
 # User input check
-if not user_input.isdigit():
+if not isinstance(user_input, int):
     print("Not an integer value requested !")
     exit(2)
 
