@@ -29,11 +29,7 @@ are found in multiple limestone layers, which lie some
 represent several varieties of perch, as well as 
 other freshwater genera and herring similar to those 
 in modern oceans. Other fish such as paddlefish, 
-garpike and stingray are also present.''',
-
-'''Toto je super krátký text v češtině!
-'''
-]
+garpike and stingray are also present.''']
 
 line_length = 40
 line = "-" * line_length
