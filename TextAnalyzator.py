@@ -29,11 +29,14 @@ are found in multiple limestone layers, which lie some
 represent several varieties of perch, as well as 
 other freshwater genera and herring similar to those 
 in modern oceans. Other fish such as paddlefish, 
-garpike and stingray are also present.'''
+garpike and stingray are also present.''',
+
+'''Toto je super krátký text v češtině!
+'''
 ]
 
-LINE_LENGTH = 60
-line = "-" * LINE_LENGTH
+line_length = 40
+line = "-" * line_length
 number_of_texts = len(TEXTS)
 
 registred_users_and_passwords = [
@@ -43,12 +46,21 @@ registred_users_and_passwords = [
     ("liz", "pass123")
 ]
 
-#user = input("username:")
-#password = input("password:")
-user = "bob"
-password = "123"
+stats = {
+    "words" : 0,
+    "titlecase words" : 0,
+    "uppercase words" : 0,
+    "lowercase words" : 0,
+    "numeric strings" : 0,
+    "sum" : 0    }
 
-# Username + password check
+word_length_occurences = dict()
+
+# Username + password - input & check
+print("Enter your username and password.")
+user = input("username:")
+password = input("password:")
+
 if (user, password) not in registred_users_and_passwords:
     print("Not registred user or incorrect password !")
     exit(1)
@@ -69,20 +81,10 @@ if selected_text_index not in range(number_of_texts):
     exit(3)
 
 # Text analysis
-stats = {
-    "words" : 0,
-    "titlecase words" : 0,
-    "uppercase words" : 0,
-    "lowercase words" : 0,
-    "numeric strings" : 0,
-    "sum" : 0    }
-
-word_length_frequency = dict()
-
 for text_fragment in TEXTS[selected_text_index].split():
     stats["words"] += 1
     word = text_fragment.strip(",.:;")
-    word_length_frequency[len(word)] = word_length_frequency.get(len(word), 0) + 1
+    word_length_occurences[len(word)] = word_length_occurences.get(len(word), 0) + 1
 
     if word.istitle():
         stats["titlecase words"] += 1
@@ -94,7 +96,7 @@ for text_fragment in TEXTS[selected_text_index].split():
         stats["numeric strings"] += 1
         stats["sum"] += int(word)
 
-# Print results I - stats
+# Print results I - Stats
 for stat in stats:
     if stat == "sum":
         print("The sum of all the numbers:", stats[stat])
@@ -104,21 +106,12 @@ for stat in stats:
         print(f"There are {stats[stat]} {stat}.")
 
 # Print results II - Occurences table
-align_adjust = LINE_LENGTH - 7
-print(line, f"LEN|{'  OCCURENCES': <{align_adjust}}|NR.", line, sep="\n")
+occurence_col_width = max(word_length_occurences.values()) + 2
+table_headers = ["LEN", "OCCURENCES".center(occurence_col_width), "NR."]
+print(line, "|".join(table_headers), line, sep="\n")
 
-for length in sorted(word_length_frequency.keys()):
-    occurence = word_length_frequency[length]
-    print(f"{length:>3}|{'*' * occurence: <{align_adjust}}|{occurence}")
+for length in sorted(word_length_occurences.keys()):
+    occurence = word_length_occurences[length]
+    print(f"{length:>{len(table_headers[0])}}|{'*' * occurence:<{len(table_headers[1])}}|{occurence}")
+
 print(line)
-
-
-# ----------------------------------------
-# LEN|  OCCURENCES  |NR.
-# ----------------------------------------
-#   1|*             |1
-#   2|*********     |9
-#   3|******        |6
-#
-# f"{zbozi: ^8}:{cena:>4} x {pocet:<2}= {mezisoucet:>3},-".
-# 				center(len(ODDELOVAC))
