@@ -65,15 +65,15 @@ if (user, password) not in registred_users_and_passwords:
 
 # Welcome + text selection prompt
 print(line, f"Welcome to the app, {user}.", f"We have {number_of_texts} texts to be analyzed.", line, sep="\n")
-user_input = int(input(f"Enter a number btw. 1 and {number_of_texts} to select:"))
+user_input = input(f"Enter a number btw. 1 and {number_of_texts} to select:")
 print(line)
 
 # User input check
-if not isinstance(user_input, int):
+if not user_input.isdecimal():
     print("Not an integer value requested !")
     exit(2)
 
-selected_text_index = user_input - 1
+selected_text_index = int(user_input) - 1
 if selected_text_index not in range(number_of_texts):
     print(f"We have no such text, a number btw. 1 and {number_of_texts} was expected.")
     exit(3)
